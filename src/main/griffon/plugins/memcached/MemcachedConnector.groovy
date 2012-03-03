@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 the original author or authors.
+ * Copyright 2010-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package griffon.plugins.memcached
 
+package griffon.plugins.memcached
 
 import net.spy.memcached.MemcachedClient
 import net.spy.memcached.ConnectionFactoryBuilder
@@ -31,25 +31,10 @@ import org.slf4j.LoggerFactory
  * @author Andres Almiray
  */
 @Singleton
-final class MemcachedConnector {
+final class MemcachedConnector implements MemcachedProvider {
     private bootstrap
 
     private static final Logger LOG = LoggerFactory.getLogger(MemcachedConnector)
-
-    static void enhance(MetaClass mc) {
-        mc.withMemcached = {Closure closure ->
-            MemcachedClientHolder.instance.withMemcached('default', closure)
-        }
-        mc.withMemcached << {String clientName, Closure closure ->
-            MemcachedClientHolder.instance.withMemcached(clientName, closure)
-        }
-        mc.withMemcached << {CallableWithArgs callable ->
-            MemcachedClientHolder.instance.withMemcached('default', callable)
-        }
-        mc.withMemcached << {String clientName, CallableWithArgs callable ->
-            MemcachedClientHolder.instance.withMemcached(clientName, callable)
-        }
-    }
 
     Object withMemcached(String clientName = 'default', Closure closure) {
         MemcachedClientHolder.instance.withMemcached(clientName, closure)

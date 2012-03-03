@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory
  * @author Andres Almiray
  */
 @Singleton
-class MemcachedClientHolder {
+class MemcachedClientHolder implements MemcachedProvider {
     private static final Logger LOG = LoggerFactory.getLogger(MemcachedClientHolder)
     private static final Object[] LOCK = new Object[0]
     private final Map<String, MemcachedClient> clients = [:]
