@@ -37,7 +37,7 @@ class MemcachedGriffonAddon {
         }
     }
 
-    def events = [
+    Map events = [
         ShutdownStart: { app ->
             ConfigObject config = MemcachedConnector.instance.createConfig(app)
             MemcachedConnector.instance.disconnect(app, config)

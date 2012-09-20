@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 the original author or authors.
+ * Copyright 2010-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ class MemcachedClientHolder implements MemcachedProvider {
     private static final Logger LOG = LoggerFactory.getLogger(MemcachedClientHolder)
     private static final Object[] LOCK = new Object[0]
     private final Map<String, MemcachedClient> clients = [:]
-  
+
     String[] getClientNames() {
         List<String> clientNames = new ArrayList().addAll(clients.keySet())
         clientNames.toArray(new String[clientNames.size()])
@@ -47,7 +47,7 @@ class MemcachedClientHolder implements MemcachedProvider {
 
     void setClient(String clientName = 'default', MemcachedClient client) {
         if(isBlank(clientName)) clientName = 'default'
-        storeClient(clientName, client)       
+        storeClient(clientName, client)
     }
 
     Object withMemcached(String clientName = 'default', Closure closure) {
@@ -70,7 +70,7 @@ class MemcachedClientHolder implements MemcachedProvider {
     
     void disconnectClient(String clientName) {
         if(isBlank(clientName)) clientName = 'default'
-        storeClient(clientName, null)        
+        storeClient(clientName, null)
     }
 
     private MemcachedClient fetchClient(String clientName) {
@@ -81,7 +81,7 @@ class MemcachedClientHolder implements MemcachedProvider {
             ConfigObject config = MemcachedConnector.instance.createConfig(app)
             client = MemcachedConnector.instance.connect(app, config, clientName)
         }
-        
+
         if(client == null) {
             throw new IllegalArgumentException("No such MemcachedClient configuration for name $clientName")
         }

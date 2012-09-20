@@ -23,6 +23,7 @@ import griffon.core.GriffonApplication
 import griffon.util.Environment
 import griffon.util.Metadata
 import griffon.util.CallableWithArgs
+import griffon.util.ConfigUtils
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -47,8 +48,7 @@ final class MemcachedConnector implements MemcachedProvider {
     // ======================================================
 
     ConfigObject createConfig(GriffonApplication app) {
-        def clientClass = app.class.classLoader.loadClass('MemcachedConfig')
-        new ConfigSlurper(Environment.current.name).parse(clientClass)
+        ConfigUtils.loadConfigWithI18n('MemcachedConfig')
     }
 
     private ConfigObject narrowConfig(ConfigObject config, String clientName) {
@@ -88,7 +88,7 @@ final class MemcachedConnector implements MemcachedProvider {
         config.servers?.each { server, settings = [:] ->
             servers << new InetSocketAddress(server, (settings.port ?: '11211'))
         }
-         
+
         ConfigObject clientConfig = narrowConfig(config, clientName)
         ConnectionFactoryBuilder cfBuilder = new ConnectionFactoryBuilder()
         clientConfig.connectionFactory?.each { key, value ->

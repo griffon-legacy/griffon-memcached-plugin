@@ -8,7 +8,7 @@ griffon.project.dependency.resolution = {
         flatDir name: "memcachedLibDir", dirs: ["${basePath}lib"]
     }
     dependencies {
-        compile 'net.spy.memcached:spymemcached:2.7.3'
+        compile 'net.spy.memcached:spymemcached:2.8.4'
     }
 }
 

@@ -27,7 +27,7 @@ final class MemcachedEnhancer {
     private static final Logger LOG = LoggerFactory.getLogger(MemcachedEnhancer)
 
     private MemcachedEnhancer() {}
-    
+
     static void enhance(MetaClass mc, MemcachedProvider provider = MemcachedClientHolder.instance) {
         if(LOG.debugEnabled) LOG.debug("Enhancing $mc with $provider")
         mc.withMemcached = {Closure closure ->
